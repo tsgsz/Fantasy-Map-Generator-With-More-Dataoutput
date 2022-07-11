@@ -192,8 +192,21 @@ function getPackCellsData() {
     provinces: pack.provinces,
     religions: pack.religions,
     rivers: pack.rivers,
-    markers: pack.markers
+    markers: pack.markers,
+    coastlines: pack.coastlines
   };
+
+  // const cellsData = {
+  //   cells: [cellObjArr[cellObjArr.length-1]],
+  //   features: [pack.features[pack.features.length-1]],
+  //   cultures: [pack.cultures[pack.cultures.length-1]],
+  //   burgs: [pack.burgs[pack.burgs.length-1]],
+  //   states: [pack.states[pack.states.length-1]],
+  //   provinces: [pack.provinces[pack.provinces.length-1]],
+  //   religions: [pack.religions[pack.religions.length-1]],
+  //   rivers: [pack.rivers[pack.rivers.length-1]],
+  //   markers: [pack.markers[pack.markers.length-1]]
+  // };
 
   return cellsData;
 }
@@ -222,4 +235,5 @@ function getPackVerticesData() {
     };
   }
   return verticesArray;
+  // return [verticesArray[0]];
 }

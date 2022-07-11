@@ -1236,6 +1236,8 @@ function drawCoastline() {
   const waterMask = defs.select("#water");
   lineGen.curve(d3.curveBasisClosed);
 
+  pack.coastlines = [];
+
   for (const i of cells.i) {
     const startFromEdge = !i && cells.h[i] >= 20;
     if (!startFromEdge && cells.t[i] !== -1 && cells.t[i] !== 1) continue; // non-edge cell
@@ -1288,6 +1290,9 @@ function drawCoastline() {
         .attr("fill", "black")
         .attr("id", "water_" + f);
       const g = features[f].group === "lake_island" ? "lake_island" : "sea_island";
+
+      pack.coastlines.push(points);
+
       coastline
         .select("#" + g)
         .append("path")

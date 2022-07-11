@@ -1123,6 +1123,10 @@ function drawBorders() {
   const sUsed = new Array(pack.states.length).fill("").map(_ => []);
   const pUsed = new Array(pack.provinces.length).fill("").map(_ => []);
 
+  // const sPath = new Array(pack.states.length).fill("").map(_ => []);
+  // const pPath = new Array(pack.provinces.length).fill("").map(_ => []);
+
+
   for (let i = 0; i < cells.i.length; i++) {
     if (!cells.state[i]) continue;
     const p = cells.province[i];
@@ -1140,6 +1144,13 @@ function drawBorders() {
 
       if (chain.length > 1) {
         pPath.push("M" + chain.map(c => vertices.p[c]).join(" "));
+
+        if (!pack.provinces[p].borders) {
+          pack.provinces[p].borders = [];
+        }
+
+        pack.provinces[p].borders.push(chain)
+
         i--;
         continue;
       }
@@ -1155,6 +1166,13 @@ function drawBorders() {
 
       if (chain.length > 1) {
         sPath.push("M" + chain.map(c => vertices.p[c]).join(" "));
+
+        if (!pack.states[s].borders) {
+          pack.states[s].borders = [];
+        }
+
+        pack.states[s].borders.push(chain)
+
         i--;
         continue;
       }
@@ -1561,7 +1579,8 @@ function drawRivers() {
   const {addMeandering, getRiverPath} = Rivers;
   lineGen.curve(d3.curveCatmullRom.alpha(0.1));
 
-  const riverPaths = pack.rivers.map(({cells, points, i, widthFactor, sourceWidth}) => {
+  const riverPaths = pack.rivers.map((river) => {
+    let {cells, points, i, widthFactor, sourceWidth} = river
     if (!cells || cells.length < 2) return;
 
     if (points && points.length !== cells.length) {
@@ -1572,7 +1591,11 @@ function drawRivers() {
     }
 
     const meanderedPoints = addMeandering(cells, points);
-    const path = getRiverPath(meanderedPoints, widthFactor, sourceWidth);
+    const {path, leftPoints, rightPoints} = getRiverPath(meanderedPoints, widthFactor, sourceWidth);
+
+    // 存入每条河的形状顶点
+    river.leftPoints = leftPoints;
+    river.rightPoints = rightPoints;
     return `<path id="river${i}" d="${path}"/>`;
   });
   rivers.html(riverPaths.join(""));

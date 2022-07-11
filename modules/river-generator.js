@@ -386,6 +386,7 @@ window.Rivers = (function () {
   };
 
   // build polygon from a list of points and calculated offset (width)
+  // 返回多边形和左右点
   const getRiverPath = function (points, widthFactor, startingWidth = 0) {
     const riverPointsLeft = [];
     const riverPointsRight = [];
@@ -408,7 +409,11 @@ window.Rivers = (function () {
     let left = lineGen(riverPointsLeft);
     left = left.substring(left.indexOf("C"));
 
-    return round(right + left, 1);
+    return {
+      path: round(right + left, 1),
+      leftPoints: riverPointsLeft,
+      rightPoints: riverPointsRight,
+    };
   };
 
   const specify = function () {

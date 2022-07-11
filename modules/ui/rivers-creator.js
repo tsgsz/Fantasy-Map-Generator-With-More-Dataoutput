@@ -105,7 +105,7 @@ function createRiver() {
 
     // render river
     lineGen.curve(d3.curveCatmullRom.alpha(0.1));
-    viewbox.select("#rivers").append("path").attr("id", id).attr("d", getRiverPath(meanderedPoints, widthFactor, sourceWidth));
+    viewbox.select("#rivers").append("path").attr("id", id).attr("d", getRiverPath(meanderedPoints, widthFactor, sourceWidth).path);
 
     editRiver(id);
   }
