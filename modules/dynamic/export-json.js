@@ -183,6 +183,10 @@ function getPackCellsData() {
     });
   }
 
+  pack.features[0] = {}
+  pack.provinces[0] = {}
+  // pack.rivers[0] = {}
+
   const cellsData = {
     cells: cellObjArr,
     features: pack.features,
